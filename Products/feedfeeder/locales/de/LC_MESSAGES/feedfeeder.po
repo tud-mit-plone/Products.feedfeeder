@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2016-02-22 08:47+0000\n"
+"POT-Creation-Date: 2024-10-07 11:13+0000\n"
 "PO-Revision-Date: 2006-10-19 14:47+0200\n"
 "Last-Translator: Reinout van Rees <reinout@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: feedfeeder\n"
 
-#: ./content/folder.py:125
-#: ./content/item.py:117
+#: ./content/folder.py
+#: ./content/item.py
 msgid "Automatic transition triggered by FeedFolder"
 msgstr ""
 
@@ -29,27 +29,27 @@ msgstr ""
 msgid "Feed Item"
 msgstr ""
 
-#: ./browser/feed.py:58
+#: ./browser/feed.py
 msgid "Feed items updated"
 msgstr ""
 
-#: ./configure.zcml:53
+#: ./configure.zcml
 msgid "Feedfeeder"
 msgstr ""
 
-#: ./configure.zcml:62
+#: ./configure.zcml
 msgid "Feedfeeder registry"
 msgstr ""
 
-#: ./content/folder.py:82
+#: ./content/folder.py
 msgid "Keep initial state"
 msgstr ""
 
-#: ./configure.zcml:62
+#: ./configure.zcml
 msgid "Profile for registry settings of Feedfeeder"
 msgstr ""
 
-#: ./configure.zcml:53
+#: ./configure.zcml
 msgid "Turn external feed entries into content items"
 msgstr ""
 
@@ -58,80 +58,105 @@ msgid "Update Feed Items"
 msgstr ""
 
 #. Default: "Feeditemauthor"
-#: ./content/item.py:28
+#: ./content/item.py
 msgid "feedfeeder_label_feedItemAuthor"
 msgstr "Autor(in)"
 
 #. Default: "Feeditemupdated"
-#: ./content/item.py:38
+#: ./content/item.py
 msgid "feedfeeder_label_feedItemUpdated"
 msgstr "Letzte Aktualisierung"
 
 #. "Feed Title"
 #. Default: "Feed Title"
-#: ./content/item.py:67
+#: ./content/item.py
 msgid "feedfeeder_label_feedTitle"
 msgstr ""
 
 #. Default: "Feeds"
-#: ./content/folder.py:23
+#: ./content/folder.py
 msgid "feedfeeder_label_feeds"
 msgstr "URLs der Feeds"
 
 #. Default: "Has body text"
-#: ./content/item.py:60
+#: ./content/item.py
 msgid "feedfeeder_label_hasbody"
 msgstr ""
 
 #. Default: "Link"
-#: ./content/item.py:46
+#: ./content/item.py
 #, fuzzy
 msgid "feedfeeder_label_link"
 msgstr "URL des Originals"
 
 #. Default: "Object Ids"
-#: ./content/item.py:53
+#: ./content/item.py
 msgid "feedfeeder_label_objectids"
 msgstr ""
 
+#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
+#: ./content/folder.py
+msgid "help_url_as_subline"
+msgstr "Zeige URL (Domain) statt Feed-Titel als Quelle. Zur Nutzung in Feeds mit mehreren Quellen."
+
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
-#: ./content/folder.py:45
+#: ./content/folder.py
 msgid "help_default_transition"
 msgstr ""
 
 #. Default: "List of rss feeds. You can prefix feed link titles using | separator. It is probably a good idea to add a colon or dash at the end of the prefix ('My place: |http://myplace/feed')."
-#: ./content/folder.py:17
+#: ./content/folder.py
 msgid "help_feeds"
 msgstr ""
 
+#. Default: "Change the limit to allow more (or less) items to be updated when feed update is performed."
+#: ./content/folder.py
+msgid "help_item_update_limit"
+msgstr ""
+
 #. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
-#: ./content/folder.py:30
+#: ./content/folder.py
 msgid "help_redirect"
 msgstr ""
 
 #. 'Default transition'
 #. Default: "Default transition"
-#: ./content/folder.py:49
+#: ./content/folder.py
 msgid "label_default_transition"
 msgstr ""
 
+#. Default: "Number of newest items that will be updated."
+#: ./content/folder.py
+msgid "label_item_update_limit"
+msgstr ""
+
 #. Default: "Automatic redirect of feed items"
-#: ./content/folder.py:34
+#: ./content/folder.py
 msgid "label_redirect"
 msgstr ""
 
+#. Default: "Show URL as Subline"
+#: ./content/folder.py
+msgid "label_url_as_subline"
+msgstr "URL als Subline"
+
 #. Default: "This item does not have any body text, click the edit tab to change it."
-#: ./browser/feed-item.pt:13
+#: ./browser/feed-item.pt
 msgid "no_body_text"
 msgstr ""
 
 #. Default: "Source available here."
-#: ./browser/feed-item.pt:37
+#: ./browser/feed-item.pt
 msgid "source_available_here"
 msgstr ""
 
+#. Default: "Source"
+#: ./content/item.py
+msgid "teaser_source"
+msgstr "Quelle"
+
 #. Default: "Test view showing the latest items from the feeds"
-#: ./skins/feedfeeder/latest_items.pt:7
+#: ./skins/feedfeeder/latest_items.pt
 msgid "test_view_title"
 msgstr "Die aktuelste einträge der Feeds (nur als Test)"

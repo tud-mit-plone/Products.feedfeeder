@@ -40,6 +40,7 @@ schema = atapi.Schema((
     atapi.StringField(
         name='defaultTransition',
         vocabulary='getAvailableTransitions',
+        default='publish',
         widget=atapi.SelectionWidget(
             format='select',
             description=_(
@@ -50,11 +51,52 @@ schema = atapi.Schema((
         )
     ),
 
-),
-)
+    atapi.BooleanField(
+        "showURLasSubline",
+        default=False,
+        schemata="default",
+        widget=atapi.BooleanWidget(
+            description=_(
+                u"help_url_as_subline",
+                default=u"Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source.",
+            ),
+            label=_("label_url_as_subline", default=u"Show URL as Subline"),
+        ),
+    ),
+
+    atapi.IntegerField(
+        "itemUpdateLimit",
+        default=20,
+        schemata="default",
+        widget=atapi.IntegerWidget(
+            description=_(
+                "help_item_update_limit",
+                default=u"Change the limit to allow more (or less) items to be updated when feed update is performed.",
+            ),
+            label=_("label_item_update_limit", default=u"Number of newest items that will be updated.")
+        )
+    ),
+),)
 
 FeedfeederFolder_schema = ATBTreeFolder.schema.copy() + \
     schema.copy()
+
+hidden_fields = [
+    "allowDiscussion",
+    "location",
+    "rights",
+    "subject",
+    "contributors",
+    "language",
+    "excludeFromNav",
+    "defaultTransition",
+    "redirect",
+]
+for field in hidden_fields:
+    if field in FeedfeederFolder_schema:
+        FeedfeederFolder_schema[field].widget.visible = {"edit": "invisible", "view": "invisible"}
+    else:
+        print "FIELD NOT IN FOLDER SCHEMA: %s" % field
 
 
 class FeedfeederFolder(ATBTreeFolder):

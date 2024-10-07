@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
+from urlparse import urlparse
+
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent
 from DateTime import DateTime
 from Products.ATContentTypes.content.document import ATDocument
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.Archetypes.atapi import (
     CalendarWidget, ComputedField, ComputedWidget, DateTimeField,
     ObjectField, Schema, StringField, StringWidget, registerType)
-
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import base_hasattr
+from Products.CMFPlone.utils import safe_unicode
 from zope import interface
 
 from Products.feedfeeder.interfaces.item import IFeedItem
 from Products.feedfeeder.config import PROJECTNAME
-
 from Products.feedfeeder import _
 
 
@@ -84,6 +86,24 @@ schema = Schema((
 FeedFeederItem_schema = getattr(ATFolder, 'schema', Schema(())).copy() + \
     schema.copy()
 
+hidden_fields = [
+    "image",
+    "allowDiscussion",
+    "relatedItems",
+    "location",
+    "rights",
+    "subject",
+    "contributors",
+    "language",
+    "imageCaption",
+    "excludeFromNav",
+]
+for field in hidden_fields:
+    if field in FeedFeederItem_schema:
+        FeedFeederItem_schema[field].widget.visible = {"edit": "invisible", "view": "invisible"}
+    else:
+        print "FIELD NOT IN ITEM SCHEMA: %s" % field
+
 
 class FeedFeederItem(ATFolder):
     """
@@ -95,6 +115,50 @@ class FeedFeederItem(ATFolder):
     _at_rename_after_creation = True
 
     schema = FeedFeederItem_schema
+
+    security.declarePublic('getTeaserText')
+
+    def getTeaserText(self):
+        """gets text for teaser
+
+        :return: Teaser text
+        :rtype: str
+        """
+
+        teaser = u""
+        # get description from feed item
+        description = self.getField("description").get(self)
+        # catch empty description
+        if description:
+            teaser = safe_unicode(description, "utf-8")
+        return teaser
+
+    def getSubline(self):
+        """gets name of rss feed or url (depending on settings)
+
+        :return: Subline
+        :rtype: str
+        """
+        parent = aq_parent(self)
+        showURL = parent.getField("showURLasSubline").get(parent)
+
+        if showURL:
+            link = self.getField("link").get(self)
+            try:
+                parse_result = urlparse(link)
+            except Exception:
+                return None
+            title = parse_result.netloc
+            if title.startswith("www."):
+                title = title.replace("www.", "")
+
+        else:
+            title = parent.getField("title").get(parent)
+
+        source = self.translate(_("teaser_source", default=u"Source"))
+        subline = "{source}: {title}".format(source=source, title=title)
+
+        return subline
 
     security.declarePublic('addEnclosure')
 
