@@ -360,12 +360,15 @@ class FeedConsumer:
                         continue
                     enclosure = obj.addEnclosure(enclosureId)
                     enclosure.update(title=enclosureId)
-                    updateWithRemoteFile(enclosure, link)
-                    if enclosure.Title() != enclosure.getId():
-                        self.tryRenamingEnclosure(enclosure, obj)
-                    # At this moment in time, the
-                    # rename-after-creation magic might have changed
-                    # the ID of the file. So we recatalog the object.
+                    try:
+                        updateWithRemoteFile(enclosure, link)
+                        if enclosure.Title() != enclosure.getId():
+                            self.tryRenamingEnclosure(enclosure, obj)
+                        # At this moment in time, the
+                        # rename-after-creation magic might have changed
+                        # the ID of the file. So we recatalog the object.
+                    except InvalidURL:
+                        pass
 
             if obj is not None:
                 # only at the end, we reindex once
@@ -439,8 +442,6 @@ def updateWithRemoteFile(obj, link):
     except OSError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
-        pass
-    except InvalidURL:
         pass
 
 
