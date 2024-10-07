@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
+from httplib import InvalidURL
 from DateTime import DateTime
 from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 from hashlib import md5
@@ -17,6 +18,7 @@ from zope import event
 from zope import interface
 
 import feedparser
+import transaction
 import logging
 import os
 import re
@@ -51,11 +53,12 @@ def convert_summary(input):
     return value
 
 
-def update_text(obj, text, mimetype=None):
+def update_text(obj, text, mimetype=None, no_reindex=False):
     field = obj.getField('text')
     if mimetype in field.getAllowedContentTypes(obj):
         obj.setText(text, mimetype=mimetype)
-        obj.reindexObject()
+        if not no_reindex:
+            obj.reindexObject()
     else:
         # update does a reindexObject automatically
         obj.update(text=text)
@@ -126,7 +129,9 @@ class FeedConsumer:
             url = url.replace('feed://', 'http://', 1)
         portal_transforms = getToolByName(feedContainer, 'portal_transforms')
         parsed = feedparser.parse(url)
-        for entry in parsed.entries:
+        # get the limit setting from the container to limit number of potential updates and reindexing
+        limit = feedContainer.getItemUpdateLimit()
+        for entry in parsed.entries[:limit]:
             id = get_uid_from_entry(entry)
             if not id:
                 logger.warn("Ignored unidentifiable entry without id or link.")
@@ -279,7 +284,7 @@ class FeedConsumer:
                                 obj, IFeedItemContentHandler)
 
                         if handler is None:
-                            update_text(obj, content['value'], mimetype=ctype)
+                            update_text(obj, content['value'], mimetype=ctype, no_reindex=True)
                         else:
                             handler.apply(top)
                             # Grab the first non-<dl> node and treat
@@ -289,12 +294,12 @@ class FeedConsumer:
                                 if node.nodeName == 'div':
                                     actualContent = node.toxml()
                                     update_text(obj, actualContent,
-                                                mimetype=ctype)
+                                                mimetype=ctype, no_reindex=True)
                                     break
                     else:
-                        update_text(obj, content['value'], mimetype=ctype)
+                        update_text(obj, content['value'], mimetype=ctype, no_reindex=True)
                 else:
-                    update_text(obj, content['value'], mimetype=ctype)
+                    update_text(obj, content['value'], mimetype=ctype, no_reindex=True)
                 if summary == convert_summary(content['value']):
                     # summary and content is the same so we can cut
                     # the summary.  The transform can stumble over
@@ -319,8 +324,6 @@ class FeedConsumer:
                         if not summary.endswith('.'):
                             summary = summary + ' ...'
                     obj.setDescription(summary)
-                    obj.reindexObject()
-
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
                 real_enclosures = [x for x in enclosures if
@@ -363,9 +366,12 @@ class FeedConsumer:
                     # At this moment in time, the
                     # rename-after-creation magic might have changed
                     # the ID of the file. So we recatalog the object.
-                    obj.reindexObject()
 
             if obj is not None:
+                # only at the end, we reindex once
+                obj.reindexObject()
+                # it is only feeds, commit whenever you can
+                transaction.commit()
                 try:
                     event.notify(FeedItemConsumedEvent(obj))
                 except UnicodeDecodeError:
@@ -433,6 +439,8 @@ def updateWithRemoteFile(obj, link):
     except OSError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
+        pass
+    except InvalidURL:
         pass
 
 
