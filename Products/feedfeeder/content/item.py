@@ -4,76 +4,73 @@ from urlparse import urlparse
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_parent
 from DateTime import DateTime
+from Products.Archetypes import atapi
 from Products.ATContentTypes.content.document import ATDocument
 from Products.ATContentTypes.content.folder import ATFolder
-from Products.Archetypes.atapi import (
-    CalendarWidget, ComputedField, ComputedWidget, DateTimeField,
-    ObjectField, Schema, StringField, StringWidget, registerType)
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import base_hasattr
 from Products.CMFPlone.utils import safe_unicode
-from zope import interface
-
-from Products.feedfeeder.interfaces.item import IFeedItem
-from Products.feedfeeder.config import PROJECTNAME
 from Products.feedfeeder import _
+from Products.feedfeeder.config import PROJECTNAME
+from Products.feedfeeder.interfaces.item import IFeedItem
+from zope import interface
 
 
 copied_fields = {}
 copied_fields['text'] = ATDocument.schema['text'].copy()
 copied_fields['text'].required = 0
-schema = Schema((
+schema = atapi.Schema((
 
-    StringField(
+    atapi.StringField(
         name='feedItemAuthor',
-        widget=StringWidget(
+        widget=atapi.StringWidget(
             label=_(
                 'feedfeeder_label_feedItemAuthor',
                 default='Feeditemauthor'),
         )
     ),
 
-    DateTimeField(
+    atapi.DateTimeField(
         name='feedItemUpdated',
         default=DateTime('2000/01/01'),
-        widget=CalendarWidget(
+        widget=atapi.CalendarWidget(
             label=_('feedfeeder_label_feedItemUpdated', 'Feeditemupdated'),
         )
     ),
 
     copied_fields['text'],
-    StringField(
+    atapi.StringField(
         name='link',
-        widget=StringWidget(
+        widget=atapi.StringWidget(
             label=_('feedfeeder_label_link', default='Link'),
         )
     ),
 
-    ComputedField(
+    atapi.ComputedField(
         name='objectids',
-        widget=ComputedWidget(
+        widget=atapi.ComputedWidget(
             label=_('feedfeeder_label_objectids', default='Object Ids'),
         )
     ),
 
-    ComputedField(
+    atapi.ComputedField(
         name='hasBody',
-        widget=ComputedWidget(
+        widget=atapi.ComputedWidget(
             label=_('feedfeeder_label_hasbody', default='Has body text'),
         )
     ),
 
-    StringField(
+    atapi.StringField(
         name='feedTitle',
-        widget=StringWidget(
+        widget=atapi.StringWidget(
             label=_('feedfeeder_label_feedTitle', default='Feed Title'),
         )
     ),
-    ObjectField(
+    atapi.ObjectField(
         name='objectInfo',
         #        read_permission=ManagePortal,
         #        write_permission=ManagePortal,
-        widget=StringWidget(
+        widget=atapi.StringWidget(
             visible={'view': 'invisible',
                      'edit': 'invisible'},
         ),
@@ -83,7 +80,7 @@ schema = Schema((
 ),
 )
 
-FeedFeederItem_schema = getattr(ATFolder, 'schema', Schema(())).copy() + \
+FeedFeederItem_schema = getattr(ATFolder, 'schema', atapi.Schema(())).copy() + \
     schema.copy()
 
 hidden_fields = [
@@ -243,4 +240,4 @@ class FeedFeederItem(ATFolder):
     feed_tags = property(_get_feed_tags, _set_feed_tags)
 
 
-registerType(FeedFeederItem, PROJECTNAME)
+atapi.registerType(FeedFeederItem, PROJECTNAME)
