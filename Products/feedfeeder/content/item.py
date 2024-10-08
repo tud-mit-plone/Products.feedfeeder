@@ -84,7 +84,6 @@ FeedFeederItem_schema = getattr(ATFolder, 'schema', atapi.Schema(())).copy() + \
     schema.copy()
 
 hidden_fields = [
-    "image",
     "allowDiscussion",
     "relatedItems",
     "location",
@@ -92,14 +91,11 @@ hidden_fields = [
     "subject",
     "contributors",
     "language",
-    "imageCaption",
     "excludeFromNav",
 ]
 for field in hidden_fields:
     if field in FeedFeederItem_schema:
         FeedFeederItem_schema[field].widget.visible = {"edit": "invisible", "view": "invisible"}
-    else:
-        print "FIELD NOT IN ITEM SCHEMA: %s" % field
 
 
 class FeedFeederItem(ATFolder):

@@ -95,8 +95,6 @@ hidden_fields = [
 for field in hidden_fields:
     if field in FeedfeederFolder_schema:
         FeedfeederFolder_schema[field].widget.visible = {"edit": "invisible", "view": "invisible"}
-    else:
-        print "FIELD NOT IN FOLDER SCHEMA: %s" % field
 
 
 class FeedfeederFolder(ATBTreeFolder):
