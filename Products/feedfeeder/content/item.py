@@ -198,7 +198,7 @@ class FeedFeederItem(ATFolder):
     def getHasBody(self):
         """Return True if the object has body text.
         """
-        if bool(self.getText()):
+        if bool(self.getRawText()):
             return 1
         return 0
 
