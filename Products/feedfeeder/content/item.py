@@ -109,6 +109,22 @@ class FeedFeederItem(ATFolder):
 
     schema = FeedFeederItem_schema
 
+    security.declarePublic('getText')
+
+    def getText(self):
+        """Accessor Override: get the feed item text, but hide outputfilter errors
+
+        :return: text
+        :rtype: unicode
+        """
+        text = u""
+        try:
+            # get text from feed item
+            text = self.getField("text").get(self)
+        except Exception:
+            pass
+        return safe_unicode(text, "utf-8")
+
     security.declarePublic('getTeaserText')
 
     def getTeaserText(self):
@@ -193,8 +209,10 @@ class FeedFeederItem(ATFolder):
 
     def getHasBody(self):
         """Return True if the object has body text.
+        Using getText, this will now return 0 if errors occured during text
+        retrieval, e.g. during outputfilters transformation
         """
-        if bool(self.getRawText()):
+        if bool(self.getText()):
             return 1
         return 0
 
