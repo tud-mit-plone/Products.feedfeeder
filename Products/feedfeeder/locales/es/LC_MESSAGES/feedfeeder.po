@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2024-10-07 11:13+0000\n"
+"POT-Creation-Date: 2024-10-10 09:47+0000\n"
 "PO-Revision-Date: 2014-12-06 16:11-0100\n"
 "Last-Translator: Manuel Gualda Caballero <manuel@minombre.es>\n"
 "Language-Team: Spanish <plone-usuarios-plone@lists.plone.org>\n"
@@ -96,11 +96,6 @@ msgstr "Enlace"
 msgid "feedfeeder_label_objectids"
 msgstr "IDs de objeto"
 
-#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
-#: ./content/folder.py
-msgid "help_url_as_subline"
-msgstr ""
-
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
 #: ./content/folder.py
@@ -122,13 +117,18 @@ msgstr ""
 msgid "help_redirect"
 msgstr "Si está marcado, usted será automáticamente redirigido al elemento de la fuente si no tiene permiso de edición."
 
+#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
+#: ./content/folder.py
+msgid "help_url_as_subline"
+msgstr ""
+
 #. 'Default transition'
 #. Default: "Default transition"
 #: ./content/folder.py
 msgid "label_default_transition"
 msgstr "Transición por defecto"
 
-#. Default: "Number of newest items that will be updated."
+#. Default: "Feed item limit for feed update"
 #: ./content/folder.py
 msgid "label_item_update_limit"
 msgstr ""

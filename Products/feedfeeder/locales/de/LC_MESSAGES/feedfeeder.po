@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2024-10-07 11:13+0000\n"
+"POT-Creation-Date: 2024-10-10 09:47+0000\n"
 "PO-Revision-Date: 2006-10-19 14:47+0200\n"
 "Last-Translator: Reinout van Rees <reinout@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
@@ -93,11 +93,6 @@ msgstr "URL des Originals"
 msgid "feedfeeder_label_objectids"
 msgstr ""
 
-#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
-#: ./content/folder.py
-msgid "help_url_as_subline"
-msgstr "Zeige URL (Domain) statt Feed-Titel als Quelle. Zur Nutzung in Feeds mit mehreren Quellen."
-
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
 #: ./content/folder.py
@@ -112,12 +107,17 @@ msgstr ""
 #. Default: "Change the limit to allow more (or less) items to be updated when feed update is performed."
 #: ./content/folder.py
 msgid "help_item_update_limit"
-msgstr ""
+msgstr "Legt fest, wie viele der neuesten Feed-Einträge beim Update abgerufen bzw. aktualisiert werden."
 
 #. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
 #: ./content/folder.py
 msgid "help_redirect"
 msgstr ""
+
+#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
+#: ./content/folder.py
+msgid "help_url_as_subline"
+msgstr "Zeige URL (Domain) statt Feed-Titel als Quelle. Zur Nutzung in Feeds mit mehreren Quellen."
 
 #. 'Default transition'
 #. Default: "Default transition"
@@ -125,10 +125,10 @@ msgstr ""
 msgid "label_default_transition"
 msgstr ""
 
-#. Default: "Number of newest items that will be updated."
+#. Default: "Feed item limit for feed update"
 #: ./content/folder.py
 msgid "label_item_update_limit"
-msgstr ""
+msgstr "Anzahl der Feed-Einträge beim Update"
 
 #. Default: "Automatic redirect of feed items"
 #: ./content/folder.py

@@ -73,7 +73,7 @@ schema = atapi.Schema((
                 "help_item_update_limit",
                 default=u"Change the limit to allow more (or less) items to be updated when feed update is performed.",
             ),
-            label=_("label_item_update_limit", default=u"Number of newest items that will be updated.")
+            label=_("label_item_update_limit", default=u"Feed item limit for feed update")
         )
     ),
 ),)

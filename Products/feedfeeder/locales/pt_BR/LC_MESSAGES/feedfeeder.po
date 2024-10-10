@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2024-10-07 11:13+0000\n"
+"POT-Creation-Date: 2024-10-10 09:47+0000\n"
 "PO-Revision-Date: Thu Jul 20 09:13:40 2006\n"
 "Last-Translator: Luciano Pacheco <lucmult@gmail.com>\n"
 "Language-Team: Luciano Pacheco <lucmult@gmail.com>\n"
@@ -93,11 +93,6 @@ msgstr "Link"
 msgid "feedfeeder_label_objectids"
 msgstr ""
 
-#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
-#: ./content/folder.py
-msgid "help_url_as_subline"
-msgstr ""
-
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
 #: ./content/folder.py
@@ -119,13 +114,18 @@ msgstr ""
 msgid "help_redirect"
 msgstr ""
 
+#. Default: "Show URL (domain) instead of feed title as source label. Use it for feeds with more than one source."
+#: ./content/folder.py
+msgid "help_url_as_subline"
+msgstr ""
+
 #. 'Default transition'
 #. Default: "Default transition"
 #: ./content/folder.py
 msgid "label_default_transition"
 msgstr "Transição padrão"
 
-#. Default: "Number of newest items that will be updated."
+#. Default: "Feed item limit for feed update"
 #: ./content/folder.py
 msgid "label_item_update_limit"
 msgstr ""
