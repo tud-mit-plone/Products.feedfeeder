@@ -85,9 +85,8 @@ msgstr ""
 
 #. Default: "Link"
 #: ./content/item.py
-#, fuzzy
 msgid "feedfeeder_label_link"
-msgstr "Links"
+msgstr "Link"
 
 #. Default: "Object Ids"
 #: ./content/item.py
