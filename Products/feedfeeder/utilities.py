@@ -367,7 +367,7 @@ class FeedConsumer:
                         # At this moment in time, the
                         # rename-after-creation magic might have changed
                         # the ID of the file. So we recatalog the object.
-                    except InvalidURL:
+                    except (InvalidURL, ValueError):
                         pass
 
             if obj is not None:
