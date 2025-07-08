@@ -105,7 +105,7 @@ class FeedConsumer:
                     feeditem.manage_renameObject(enclosure.getId(),
                                                  newId)
                     break
-                except:
+                except Exception:
                     pass
             newId = '%i_%s' % (x, enclosure.Title())
 
@@ -255,7 +255,7 @@ class FeedConsumer:
                     encoded_content = content['value'].encode('utf-8')
                     try:
                         doc = minidom.parseString(encoded_content)
-                    except:
+                    except Exception:
                         # Might be an ExpatError, but that is
                         # somewhere in a .so file, so we cannot
                         # specifically catch only that error.  One
@@ -265,7 +265,7 @@ class FeedConsumer:
                         encoded_content = "<div>" + encoded_content + "</div>"
                         try:
                             doc = minidom.parseString(encoded_content)
-                        except:
+                        except Exception:
                             # Might be that ExpatError again.
                             logger.warn(
                                 "Error parsing content for %s",
@@ -447,4 +447,7 @@ def updateWithRemoteFile(obj, link):
 
 def feedfolder_created_handler(feedfolder, event):
     """Update feed folder after its creation"""
-    feedfolder.restrictedTraverse("update_feed_items")()
+    try:
+        feedfolder.restrictedTraverse("update_feed_items")()
+    except Exception:
+        logger.exception("Error while retrieving items for %s:" % feedfolder.getId())
